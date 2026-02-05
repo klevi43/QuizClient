@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { Client } from "@stomp/stompjs";
 import "./App.css";
-
+import ChoiceBox from "./components/ChoiceBox";
+import type { Word } from "./models/Word";
 function App() {
   const [count, setCount] = useState(0);
   // Why are we using this here?
@@ -29,9 +30,14 @@ function App() {
     });
     console.log("clicked");
   };
+  const testWord: Word = {
+    id: 1,
+    content: "compassionate",
+  };
   return (
     <>
       <div>
+        <ChoiceBox word={testWord} />
         <button onClick={() => client.activate()}>Connect</button>
         <button onClick={sendEvent}>Get message</button>
       </div>
