@@ -1,4 +1,4 @@
-export interface Word {
+export interface WordDto {
   id: number;
   content: string;
 }

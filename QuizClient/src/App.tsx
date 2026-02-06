@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-import { Client } from "@stomp/stompjs";
+
 import "./App.css";
 import ChoiceBox from "./components/ChoiceBox";
-import type { Word } from "./models/Word";
+import type { WordDto } from "./models/Word";
+import { webSocketService } from "./services/websocket/client";
 function App() {
   const [count, setCount] = useState(0);
   // Why are we using this here?
@@ -12,34 +13,31 @@ function App() {
   // created each time the page rerenders.
   const stompClient = useRef<Client | null>(null);
 
-  const client = new Client({
-    brokerURL: "ws://localhost:8080/ws-connect",
-    onConnect: () => {
-      console.log("connected");
-      client.subscribe("/quiz/answer", (res) => {
-        console.log("Server says: " + res.body);
-      });
-    },
-    onStompError: (frame) => console.error(frame),
-    onWebSocketError: (err) => console.error(err),
-  });
-
-  const sendEvent = () => {
-    client.publish({
-      destination: "/app/receive-answer",
-    });
-    console.log("clicked");
-  };
-  const testWord: Word = {
+  const testWord: WordDto = {
     id: 1,
     content: "compassionate",
   };
+
   return (
     <>
       <div>
         <ChoiceBox word={testWord} />
-        <button onClick={() => client.activate()}>Connect</button>
-        <button onClick={sendEvent}>Get message</button>
+        <button
+          className="text-blue-500"
+          onClick={() => {
+            webSocketService.connect();
+            webSocketService.subscribe("/quiz/answer");
+          }}
+        >
+          Connect
+        </button>
+        <button
+          onClick={() =>
+            webSocketService.publish("/app/receive-answer", testWord)
+          }
+        >
+          Get message
+        </button>
       </div>
     </>
   );

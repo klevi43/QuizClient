@@ -6,7 +6,9 @@ interface Props {
 const ChoiceBox = ({ word }: Props) => {
   return (
     <>
-      <button>{word.content}</button>
+      <button className="border-2 m-[2rem] p-[2rem] rounded text-[1.5rem]">
+        {word.content}
+      </button>
     </>
   );
 };
