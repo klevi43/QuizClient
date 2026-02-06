@@ -1,12 +1,13 @@
 import { Client } from "@stomp/stompjs";
 import type { WordDto } from "../../models/Word";
+import { BROKER_URL } from "../../constants/constants";
 
 class WebSocketService {
   private client: Client;
 
   constructor() {
     this.client = new Client({
-      brokerURL: "ws://localhost:8080/ws-connect", // go here to do 3 way handshake
+      brokerURL: BROKER_URL, // go here to do 3 way handshake
       onConnect: () => {
         console.log("connected");
       },

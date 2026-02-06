@@ -1,4 +1,10 @@
 @import "tailwindcss";
+
+:root {
+  background-image: url("./assets/quiz-background.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
 /* :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
