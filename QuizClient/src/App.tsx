@@ -26,16 +26,12 @@ function App() {
           className="text-blue-500"
           onClick={() => {
             webSocketService.connect();
-            webSocketService.subscribe("/quiz/answer");
+            webSocketService.subscribe("/quiz/get-quiz");
           }}
         >
           Connect
         </button>
-        <button
-          onClick={() =>
-            webSocketService.publish("/app/receive-answer", testWord)
-          }
-        >
+        <button onClick={() => webSocketService.publish("/app/send-quiz", 1)}>
           Get message
         </button>
       </div>

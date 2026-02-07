@@ -10,6 +10,9 @@ class WebSocketService {
       brokerURL: BROKER_URL, // go here to do 3 way handshake
       onConnect: () => {
         console.log("connected");
+        this.client.subscribe("/quiz/get-quiz", (res) => {
+          console.log("Server says: " + res.body);
+        });
       },
       onStompError: (frame) => console.error(frame),
       onWebSocketError: (err) => console.error(err),
@@ -21,15 +24,13 @@ class WebSocketService {
   }
 
   subscribe(destination: string) {
-    this.client.subscribe(destination, (res) => {
-      console.log("Server says: " + res.body);
-    });
+    console.log("Connected?", this.client.connected);
   }
 
-  publish(destination: string, word: WordDto) {
+  publish(destination: string, quizId: number) {
     this.client.publish({
       destination: destination,
-      body: JSON.stringify(word),
+      body: JSON.stringify(quizId),
     });
   }
   disconnect() {
