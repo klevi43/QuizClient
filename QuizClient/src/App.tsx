@@ -4,6 +4,7 @@ import "./App.css";
 import ChoiceBox from "./components/ChoiceBox";
 import type { WordDto } from "./models/Word";
 import { webSocketService } from "./services/websocket/client";
+import { quizService } from "./services/rest/quizService";
 function App() {
   const [count, setCount] = useState(0);
   // Why are we using this here?
@@ -22,15 +23,8 @@ function App() {
     <>
       <div>
         <ChoiceBox word={testWord} />
-        <button
-          className="text-blue-500"
-          onClick={() => {
-            webSocketService.connect();
-            webSocketService.subscribe("/quiz/get-quiz");
-          }}
-        >
-          Connect
-        </button>
+        <button onClick={() => quizService.getQuizById()}>Get Quiz</button>
+        <button className="text-blue-500">Connect</button>
         <button onClick={() => webSocketService.publish("/app/send-quiz", 1)}>
           Get message
         </button>
