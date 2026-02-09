@@ -5,6 +5,7 @@ import ChoiceBox from "./components/ChoiceBox";
 import type { WordDto } from "./models/Word";
 import { webSocketService } from "./services/websocket/client";
 import { quizService } from "./services/rest/quizService";
+import QuestionBox from "./components/QuestionBox";
 function App() {
   const [count, setCount] = useState(0);
   // Why are we using this here?
@@ -22,6 +23,9 @@ function App() {
   return (
     <>
       <div>
+        <div className="flex justify-center mt-[2rem]">
+          <QuestionBox content="(n.) an animal with four legs and meows" />
+        </div>
         <ChoiceBox word={testWord} />
         <button onClick={() => quizService.getQuizById()}>Get Quiz</button>
         <button className="text-blue-500">Connect</button>
