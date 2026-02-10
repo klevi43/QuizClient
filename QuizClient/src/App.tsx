@@ -6,6 +6,7 @@ import type { WordDto } from "./models/Word";
 import { webSocketService } from "./services/websocket/client";
 import { quizService } from "./services/rest/quizService";
 import QuestionBox from "./components/QuestionBox";
+import useGetQuiz from "./hooks/useGetQuiz";
 function App() {
   const [count, setCount] = useState(0);
   // Why are we using this here?
@@ -14,12 +15,12 @@ function App() {
   // If we don't do this, a new socket instance will be
   // created each time the page rerenders.
   const stompClient = useRef<Client | null>(null);
-
+  const { data: quizDto, error, isLoading } = useGetQuiz(1);
   const testWord: WordDto = {
     id: 1,
     content: "compassionate",
   };
-
+  console.log(quizDto);
   return (
     <>
       <div>
@@ -27,7 +28,7 @@ function App() {
           <QuestionBox content="(n.) an animal with four legs and meows" />
         </div>
         <ChoiceBox word={testWord} />
-        <button onClick={() => quizService.getQuizById()}>Get Quiz</button>
+        <button>Get Quiz</button>
         <button className="text-blue-500">Connect</button>
         <button onClick={() => webSocketService.publish("/app/send-quiz", 1)}>
           Get message
