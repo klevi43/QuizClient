@@ -1,7 +1,8 @@
 import React from "react";
-import type { Word } from "../models/Word";
+
+import type { OptionDto } from "../models/OptionDto";
 interface Props {
-  word: Word;
+  word: OptionDto;
 }
 const ChoiceBox = ({ word }: Props) => {
   return (
