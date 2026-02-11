@@ -1,6 +1,6 @@
 import type { QuestionDto } from "./QuestionDto";
 
-interface QuizDto {
+export interface QuizDto {
   id: number;
-  questionDto: QuestionDto[];
+  questionList: QuestionDto[];
 }

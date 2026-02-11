@@ -14,20 +14,19 @@ function App() {
   // maintain a reference to the same socket instance.
   // If we don't do this, a new socket instance will be
   // created each time the page rerenders.
-  const stompClient = useRef<Client | null>(null);
+  //const stompClient = useRef<Client | null>(null);
   const { data: quizDto, error, isLoading } = useGetQuiz(1);
-  const testWord: WordDto = {
-    id: 1,
-    content: "compassionate",
-  };
+
   console.log(quizDto);
   return (
     <>
       <div>
         <div className="flex justify-center mt-[2rem]">
-          <QuestionBox content="(n.) an animal with four legs and meows" />
+          {quizDto && (
+            <QuestionBox content={quizDto?.questionList[1].content} />
+          )}
         </div>
-        <ChoiceBox word={testWord} />
+        <ChoiceBox word="Blorp" />
         <button>Get Quiz</button>
         <button className="text-blue-500">Connect</button>
         <button onClick={() => webSocketService.publish("/app/send-quiz", 1)}>

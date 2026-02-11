@@ -1,13 +1,14 @@
 import axios from "axios";
 import { axiosInstance } from "./axiosClient";
+import type { QuizDto } from "../../models/QuizDto";
 class QuizService {
   constructor() {}
-  async getQuizById(quizId: number) {
+  async getQuizById(quizId: number): Promise<QuizDto | undefined> {
     try {
       const res = await axiosInstance.get("/quiz/get", {
         params: { id: quizId },
       });
-      console.log(res);
+      return res.data;
     } catch (err) {
       console.log(err);
     }
