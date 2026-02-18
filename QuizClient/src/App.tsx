@@ -1,12 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 
 import "./App.css";
-import ChoiceBox from "./components/ChoiceBox";
-import type { WordDto } from "./models/Word";
-import { webSocketService } from "./services/websocket/client";
 import QuizQuestion from "./pages/QuizQuestion";
 import { BrowserRouter, Route, Routes } from "react-router";
 import Start from "./pages/Start";
+import { answerSocketService } from "./services/websocket/client";
 function App() {
   const [count, setCount] = useState(0);
   // Why are we using this here?
@@ -15,7 +13,7 @@ function App() {
   // If we don't do this, a new socket instance will be
   // created each time the page rerenders.
   //const stompClient = useRef<Client | null>(null);
-
+  answerSocketService.connect();
   //console.log(quizDto);
   console.log("rendering");
   return (

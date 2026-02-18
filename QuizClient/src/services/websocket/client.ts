@@ -1,8 +1,9 @@
 import { Client } from "@stomp/stompjs";
 import type { WordDto } from "../../models/Word";
 import { BROKER_URL } from "../../constants/constants";
+import type { AnswerDto } from "../../models/answerDto";
 
-class WebSocketService {
+class AnswerSocketService {
   private client: Client;
 
   constructor() {
@@ -10,7 +11,7 @@ class WebSocketService {
       brokerURL: BROKER_URL, // go here to do 3 way handshake
       onConnect: () => {
         console.log("connected");
-        this.client.subscribe("/quiz/get-quiz", (res) => {
+        this.client.subscribe("/queue/answer-result/user123", (res) => {
           console.log("Server says: " + res.body);
         });
       },
@@ -27,10 +28,11 @@ class WebSocketService {
     console.log("Connected?", this.client.connected);
   }
 
-  publish(destination: string, quizId: number) {
+  submitAnswer(destination: string, answer: AnswerDto) {
+    console.log("clicked aub ans");
     this.client.publish({
       destination: destination,
-      body: JSON.stringify(quizId),
+      body: JSON.stringify(answer),
     });
   }
   disconnect() {
@@ -38,4 +40,4 @@ class WebSocketService {
   }
 }
 
-export const webSocketService = new WebSocketService();
+export const answerSocketService = new AnswerSocketService();
