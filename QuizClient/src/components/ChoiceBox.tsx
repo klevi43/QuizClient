@@ -5,8 +5,9 @@ import type { AnswerDto } from "../models/answerDto";
 interface Props {
   option: OptionDto;
   questionId: number;
+  incrementQuestionNo: () => void;
 }
-const ChoiceBox = ({ option, questionId }: Props) => {
+const ChoiceBox = ({ option, questionId, incrementQuestionNo }: Props) => {
   const ans: AnswerDto = {
     from: "user123",
     optionId: option.id,
@@ -15,9 +16,10 @@ const ChoiceBox = ({ option, questionId }: Props) => {
   return (
     <>
       <button
-        onClick={() =>
-          answerSocketService.submitAnswer("/app/receive-answer", ans)
-        }
+        onClick={() => {
+          answerSocketService.submitAnswer("/app/receive-answer", ans);
+          incrementQuestionNo();
+        }}
         className="bg-blue-50 w-[25%] m-[2rem] p-[2rem] rounded text-[1.8rem]
       hover:bg-yellow-200"
       >
