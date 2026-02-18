@@ -5,7 +5,6 @@ import type { AnswerDto } from "../../models/answerDto";
 
 class AnswerSocketService {
   private client: Client;
-
   constructor() {
     this.client = new Client({
       brokerURL: BROKER_URL, // go here to do 3 way handshake
@@ -13,6 +12,7 @@ class AnswerSocketService {
         console.log("connected");
         this.client.subscribe("/queue/answer-result/user123", (res) => {
           console.log("Server says: " + res.body);
+          if (this.onAnswerResult) this.onAnswerResult(JSON.parse(res.body));
         });
       },
       onStompError: (frame) => console.error(frame),
@@ -27,6 +27,8 @@ class AnswerSocketService {
   subscribe(destination: string) {
     console.log("Connected?", this.client.connected);
   }
+
+  onAnswerResult?: (result: boolean) => void;
 
   submitAnswer(destination: string, answer: AnswerDto) {
     console.log("clicked aub ans");
