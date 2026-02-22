@@ -3,6 +3,7 @@ import QuestionBox from "../components/QuestionBox";
 import ChoiceBox from "../components/ChoiceBox";
 import useGetQuiz from "../hooks/useGetQuiz";
 import { answerSocketService } from "../services/websocket/client";
+import QuestionCounter from "../components/QuestionCounter";
 const QuizQuestion = () => {
   const { data: quizDto, error, isLoading } = useGetQuiz(1);
   console.log(quizDto);
@@ -31,7 +32,16 @@ const QuizQuestion = () => {
         {quizDto && (
           <QuestionBox content={quizDto.questionList[questionNo].content} />
         )}
+        <div>
+          {quizDto && (
+            <QuestionCounter
+              currentQuestion={questionNo + 1}
+              totalQuestions={quizDto?.questionList.length}
+            />
+          )}
+        </div>
       </div>
+
       <div className="flex justify-center">
         {quizDto &&
           quizDto.questionList[questionNo].options.map((option) => (
